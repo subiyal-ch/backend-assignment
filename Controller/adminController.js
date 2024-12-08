@@ -1,6 +1,7 @@
+const { models } = require("../database");
 const {
   createAdmin,
-  getAllAdmins,
+  getAllAdmin,
   getAdmin,
   updateAdmin,
   removeAdmin,
@@ -9,8 +10,8 @@ const responseHandler = require("../responseHandler");
 
 const create = async (req, res) => {
   try {
-    const user = await createAdmin(req.body);
-    return responseHandler(res, user);
+    const admin = await createAdmin(req.body);
+    return responseHandler(res, { data: admin });
   } catch (error) {
     return responseHandler(res, { error: error });
   }
@@ -18,8 +19,8 @@ const create = async (req, res) => {
 
 const getAll = async (req, res) => {
   try {
-    const user = await getAllAdmins();
-    return responseHandler(res, user);
+    const admin = await getAllAdmin();
+    return responseHandler(res, { data: admin });
   } catch (error) {
     return responseHandler(res, { error: error });
   }
@@ -27,8 +28,8 @@ const getAll = async (req, res) => {
 
 const get = async (req, res) => {
   try {
-    const user = await getAdmin(req.query);
-    return responseHandler(res, user);
+    const admin = await getAdmin(req.query);
+    return responseHandler(res, admin);
   } catch (error) {
     return responseHandler(res, { error: error });
   }
@@ -36,8 +37,8 @@ const get = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const user = await updateAdmin(req.query);
-    return responseHandler(res, user);
+    const admin = await updateAdmin(req.body);
+    return responseHandler(res, admin);
   } catch (error) {
     return responseHandler(res, { error: error });
   }
@@ -45,8 +46,8 @@ const update = async (req, res) => {
 
 const remove = async (req, res) => {
   try {
-    const user = await removeAdmin(req.query);
-    return responseHandler(res, user);
+    const admin = await removeAdmin(req.query);
+    return responseHandler(res, admin);
   } catch (error) {
     return responseHandler(res, { error: error });
   }

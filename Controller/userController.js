@@ -1,3 +1,4 @@
+const { models } = require("../database");
 const {
   createUser,
   getAllUsers,
@@ -10,7 +11,7 @@ const responseHandler = require("../responseHandler");
 const create = async (req, res) => {
   try {
     const user = await createUser(req.body);
-    return responseHandler(res, user);
+    return responseHandler(res, { data: user });
   } catch (error) {
     return responseHandler(res, { error: error });
   }
@@ -19,7 +20,7 @@ const create = async (req, res) => {
 const getAll = async (req, res) => {
   try {
     const user = await getAllUsers();
-    return responseHandler(res, user);
+    return responseHandler(res, { data: user });
   } catch (error) {
     return responseHandler(res, { error: error });
   }
@@ -36,7 +37,7 @@ const get = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const user = await updateUser(req.query);
+    const user = await updateUser(req.body);
     return responseHandler(res, user);
   } catch (error) {
     return responseHandler(res, { error: error });

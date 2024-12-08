@@ -5,12 +5,22 @@ const {
   getAll,
   update,
   remove,
+  get,
 } = require("../Controller/userController");
 
+// middlewares
+const {
+  createUser,
+  getAllUser,
+  getUser,
+  updateUser,
+  removeUser,
+} = require("../validations/userValidator");
 /* GET users listing. */
-router.post("/create", create);
-router.get("/get-all", getAll);
-router.put("/update", update);
-router.delete("/delete", remove);
+router.post("/create", createUser, create);
+router.get("/get-all", getAllUser, getAll);
+router.get("/get", getUser, get);
+router.put("/update", updateUser, update);
+router.delete("/delete", removeUser, remove);
 
 module.exports = router;

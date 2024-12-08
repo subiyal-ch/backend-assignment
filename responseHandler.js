@@ -10,7 +10,7 @@ module.exports = (res, result) => {
     });
   } catch (error) {
     return res.send({
-      status: 200,
+      status: 400,
       data: result.data,
       error: {},
     });

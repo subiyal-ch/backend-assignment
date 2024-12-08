@@ -28,7 +28,7 @@ module.exports = {
     }
   },
 
-  getUser: async (query) => {
+  getUser: async ({ username, userId }) => {
     try {
       const data = await models.users.findOne({
         where: {
@@ -49,9 +49,9 @@ module.exports = {
     }
   },
 
-  updateUser: async (body) => {
+  updateUser: async ({ userId, ...body }) => {
     try {
-      const data = await models.users.update({ ...body });
+      const data = await models.users.destroy({ where: { userId: userId } });
       return {
         data: data,
       };
@@ -60,9 +60,9 @@ module.exports = {
     }
   },
 
-  removeUser: async (query) => {
+  removeUser: async ({ userId }) => {
     try {
-      const data = await models.users.remove({ ...body });
+      const data = await models.users.destroy({ where: { userId: userId } });
       return {
         data: data,
       };

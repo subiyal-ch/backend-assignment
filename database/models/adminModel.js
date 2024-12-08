@@ -3,7 +3,7 @@ const { models } = require("../index");
 module.exports = {
   createAdmin: async (body) => {
     try {
-      const data = await models.admin.create({ ...body });
+      const data = await models.users.create({ ...body });
       return {
         data: data,
       };
@@ -12,9 +12,9 @@ module.exports = {
     }
   },
 
-  getAllAdmins: async (query) => {
+  getAllAdmin: async (query) => {
     try {
-      const data = await models.admin.findAndCountAll({
+      const data = await models.users.findAndCountAll({
         attributes: {
           exclude: ["password", "deletedAt"],
         },
@@ -28,9 +28,9 @@ module.exports = {
     }
   },
 
-  getAdmin: async (query) => {
+  getAdmin: async ({ username, userId }) => {
     try {
-      const data = await models.admin.findOne({
+      const data = await models.users.findOne({
         where: {
           ...(username == "false"
             ? { userId: userId }
@@ -49,9 +49,9 @@ module.exports = {
     }
   },
 
-  updateAdmin: async (body) => {
+  updateAdmin: async ({ userId, ...body }) => {
     try {
-      const data = await models.admin.update({ ...body });
+      const data = await models.users.destroy({ where: { userId: userId } });
       return {
         data: data,
       };
@@ -60,9 +60,9 @@ module.exports = {
     }
   },
 
-  removeAdmin: async (query) => {
+  removeAdmin: async ({ userId }) => {
     try {
-      const data = await models.admin.remove({ ...body });
+      const data = await models.users.destroy({ where: { userId: userId } });
       return {
         data: data,
       };
