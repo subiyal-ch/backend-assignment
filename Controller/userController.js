@@ -1,35 +1,55 @@
-const create = (req, res) => {
-  // for seeing data in the console of the editor
-  console.log(req.body);
+const {
+  createUser,
+  getAllUsers,
+  getUser,
+  updateUser,
+  removeUser,
+} = require("../database/models/userModel");
+const responseHandler = require("../responseHandler");
 
-  return res.send({
-    message: "Create method is working sucessfully",
-    // for receive data in the response of the postman
-
-    data: req.body,
-  });
+const create = async (req, res) => {
+  try {
+    const user = await createUser(req.body);
+    return responseHandler(res, user);
+  } catch (error) {
+    return responseHandler(res, { error: error });
+  }
 };
 
-const getAll = (req, res) => {
-  const { query } = req;
-  return res.send({
-    message: "Get method is working sucessfully",
-    data: query,
-  });
+const getAll = async (req, res) => {
+  try {
+    const user = await getAllUsers();
+    return responseHandler(res, user);
+  } catch (error) {
+    return responseHandler(res, { error: error });
+  }
 };
 
-const update = (req, res) => {
-  return res.send({
-    message: " Update method is working sucessfully",
-    data: "Update path request",
-  });
+const get = async (req, res) => {
+  try {
+    const user = await getUser(req.query);
+    return responseHandler(res, user);
+  } catch (error) {
+    return responseHandler(res, { error: error });
+  }
 };
 
-const remove = (req, res) => {
-  return res.send({
-    message: " Delete method is working sucessfully",
-    data: "Remove path request",
-  });
+const update = async (req, res) => {
+  try {
+    const user = await updateUser(req.query);
+    return responseHandler(res, user);
+  } catch (error) {
+    return responseHandler(res, { error: error });
+  }
 };
 
-module.exports = { create, getAll, update, remove };
+const remove = async (req, res) => {
+  try {
+    const user = await removeUser(req.query);
+    return responseHandler(res, user);
+  } catch (error) {
+    return responseHandler(res, { error: error });
+  }
+};
+
+module.exports = { create, getAll, get, update, remove };

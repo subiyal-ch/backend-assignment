@@ -1,37 +1,55 @@
-module.exports = {
-  create: (req, res) => {
-    try {
-      return res.send({
-        status: 200,
-        message: "Admin Created",
-        data: { value: 1 },
-        error: {},
-      });
-    } catch (error) {
-      return res.send({
-        status: 404,
-        message: "Unable to create admin",
-        data: {},
-        error: error,
-      });
-    }
-  },
+const {
+  createAdmin,
+  getAllAdmins,
+  getAdmin,
+  updateAdmin,
+  removeAdmin,
+} = require("../database/models/adminModel");
+const responseHandler = require("../responseHandler");
 
-  get: (req, res) => {
-    try {
-      return res.send({
-        status: 200,
-        message: "Admin found",
-        data: { value: 1 },
-        error: {},
-      });
-    } catch (error) {
-      return res.send({
-        status: 404,
-        message: "Unable to get admin",
-        data: {},
-        error: error,
-      });
-    }
-  },
+const create = async (req, res) => {
+  try {
+    const user = await createAdmin(req.body);
+    return responseHandler(res, user);
+  } catch (error) {
+    return responseHandler(res, { error: error });
+  }
 };
+
+const getAll = async (req, res) => {
+  try {
+    const user = await getAllAdmins();
+    return responseHandler(res, user);
+  } catch (error) {
+    return responseHandler(res, { error: error });
+  }
+};
+
+const get = async (req, res) => {
+  try {
+    const user = await getAdmin(req.query);
+    return responseHandler(res, user);
+  } catch (error) {
+    return responseHandler(res, { error: error });
+  }
+};
+
+const update = async (req, res) => {
+  try {
+    const user = await updateAdmin(req.query);
+    return responseHandler(res, user);
+  } catch (error) {
+    return responseHandler(res, { error: error });
+  }
+};
+
+const remove = async (req, res) => {
+  try {
+    const user = await removeAdmin(req.query);
+    return responseHandler(res, user);
+  } catch (error) {
+    return responseHandler(res, { error: error });
+  }
+};
+
+module.exports = { create, getAll, get, update, remove };
